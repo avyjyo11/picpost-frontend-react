@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/picpost-frontend-react/static/css/main.8d4d1460.chunk.css",
+    "main.js": "/picpost-frontend-react/static/js/main.a42b74da.chunk.js",
+    "main.js.map": "/picpost-frontend-react/static/js/main.a42b74da.chunk.js.map",
+    "runtime-main.js": "/picpost-frontend-react/static/js/runtime-main.b2d11886.js",
+    "runtime-main.js.map": "/picpost-frontend-react/static/js/runtime-main.b2d11886.js.map",
+    "static/js/2.e01accbe.chunk.js": "/picpost-frontend-react/static/js/2.e01accbe.chunk.js",
+    "static/js/2.e01accbe.chunk.js.map": "/picpost-frontend-react/static/js/2.e01accbe.chunk.js.map",
+    "index.html": "/picpost-frontend-react/index.html",
+    "precache-manifest.fc4a961dc336287910a9e1ba8136304f.js": "/picpost-frontend-react/precache-manifest.fc4a961dc336287910a9e1ba8136304f.js",
+    "service-worker.js": "/picpost-frontend-react/service-worker.js",
+    "static/css/main.8d4d1460.chunk.css.map": "/picpost-frontend-react/static/css/main.8d4d1460.chunk.css.map",
+    "static/js/2.e01accbe.chunk.js.LICENSE": "/picpost-frontend-react/static/js/2.e01accbe.chunk.js.LICENSE"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.b2d11886.js",
+    "static/js/2.e01accbe.chunk.js",
+    "static/css/main.8d4d1460.chunk.css",
+    "static/js/main.a42b74da.chunk.js"
+  ]
+}
