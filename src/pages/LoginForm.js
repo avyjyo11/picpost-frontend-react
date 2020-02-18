@@ -25,7 +25,7 @@ export class LoginForm extends Component {
 
   onSubmit = e => {
     e.preventDefault();
-    const arr = ['alert'];
+    const arr = ["alert"];
     axios
       .post("http://localhost:9011/api/auth/login", this.state.data)
       .then(res => {
