@@ -37,7 +37,7 @@ export class LoginForm extends Component {
         });
         window.localStorage.setItem("token", res.data.token);
         window.localStorage.setItem("userid", res.data.userid);
-        window.location.pathname = "/";
+        this.props.history.push("/");
       })
       .catch(err => {
         arr.push("alert-danger");
@@ -50,6 +50,7 @@ export class LoginForm extends Component {
   };
 
   render() {
+    console.log(this.props);
     return (
       <div className="form-wrapper">
         <div className="form-container">

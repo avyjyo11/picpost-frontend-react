@@ -1,19 +1,38 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
-
 import Main from "./pages/Main";
 import LoginForm from "./pages/LoginForm";
 import RegisterForm from "./pages/RegisterForm";
-
 import "./styles/App.css";
 
-const PrivateRoute = ({ path, component: Component, isLoggedIn, ...rest }) => {
+//PrivateRoute is HOC style1
+// const withAuth = function(Component) {
+//   return function({ path, isLoggedIn, ...rest }) {
+//     return (
+//       <Route
+//         path={path}
+//         render={props =>
+//           isLoggedIn === true ? (
+//             <Component {...rest} {...props} />
+//           ) : (
+//             <Redirect to="/login" />
+//           )
+//         }
+//       />
+//     );
+//   };
+// };
+
+// const PrivateRoute = withAuth(Main);
+
+//PrivateRoute2 is HOC style2
+const PrivateRoute2 = ({ path, component: Component, isLoggedIn, ...rest }) => {
   return (
     <Route
       path={path}
       render={props =>
         isLoggedIn === true ? (
-          <Component {...rest} {...props} />
+          <Component {...props} {...rest} />
         ) : (
           <Redirect to="/login" />
         )
@@ -30,10 +49,11 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <PrivateRoute
+        {/* <PrivateRoute path="/home" isLoggedIn={this.state.isLoggedIn} /> */}
+        <PrivateRoute2
           path="/home"
-          isLoggedIn={this.state.isLoggedIn}
           component={Main}
+          isLoggedIn={this.state.isLoggedIn}
         />
         <Route
           exact
@@ -46,12 +66,8 @@ class App extends React.Component {
             )
           }
         />
-        <Route path="/login">
-          <LoginForm />
-        </Route>
-        <Route path="/register">
-          <RegisterForm />
-        </Route>
+        <Route path="/login" render={props => <LoginForm {...props} />} />
+        <Route path="/register" component={RegisterForm} />
       </div>
     );
   }

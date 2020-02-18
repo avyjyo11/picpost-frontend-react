@@ -10,7 +10,7 @@ import Profile from "./Profile";
 
 function Main(props) {
   const { path, url } = useRouteMatch();
-
+  
   return (
     <div>
       <Header url={url} />

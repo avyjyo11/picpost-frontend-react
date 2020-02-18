@@ -31,7 +31,6 @@ class Home extends Component {
 
   render() {
     const { url } = this.props.match;
-
     const tabsStyle = {
       paddingBottom: "20px"
     };
