@@ -69,7 +69,7 @@ class View extends Component {
         }
       })
       .then(res => {
-        window.location.pathname = "/home/profile";
+        this.props.history.push("/home/profile");
       })
       .catch(err => console.log(err));
   };
@@ -86,7 +86,7 @@ class View extends Component {
         }
       })
       .then(res => {
-        window.location.pathname = "/home/profile";
+        this.props.history.push("/home/profile");
       })
       .catch(err => console.log(err));
   };
@@ -116,7 +116,9 @@ class View extends Component {
         }
       })
       .then(res => {
-        window.location.pathname = `/home/${params.postid}`;
+        this.setState({
+          comments: [...this.state.comments, res.data]
+        });
       })
       .catch(err => console.log(err.response));
   };

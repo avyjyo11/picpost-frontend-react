@@ -25,19 +25,24 @@ export class LoginForm extends Component {
 
   onSubmit = e => {
     e.preventDefault();
+    console.log("submit");
     const arr = ["alert"];
     axios
       .post("http://localhost:9011/api/auth/login", this.state.data)
       .then(res => {
         arr.push("alert-success");
+        window.localStorage.setItem("token", res.data.token);
+        window.localStorage.setItem("userid", res.data.userid);
+        //window.location.pathname = "/";
         this.setState({
           loggedIn: true,
           loginClass: arr,
           loginMsg: "Login Successful!"
         });
-        window.localStorage.setItem("token", res.data.token);
-        window.localStorage.setItem("userid", res.data.userid);
-        this.props.history.push("/");
+        this.props.settingState();
+        setTimeout(() => {
+          this.props.history.push("/");
+        }, 500);
       })
       .catch(err => {
         arr.push("alert-danger");
@@ -50,7 +55,6 @@ export class LoginForm extends Component {
   };
 
   render() {
-    console.log(this.props);
     return (
       <div className="form-wrapper">
         <div className="form-container">
