@@ -57,7 +57,6 @@ class Home extends Component {
               </Link>
             );
           })}
-          <PostBlock />
         </Columned>
       </React.Fragment>
     );

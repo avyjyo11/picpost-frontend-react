@@ -16,29 +16,31 @@ export class RegisterForm extends Component {
         password: ""
       },
       disabled: false,
-      defaultClass: ["alert"],
-      registerClass: ["alert"],
-      registerSuccess: -1
+      registerClass: [],
+      registerState: false,
+      msg: ""
     };
   }
 
   onSubmit = e => {
     e.preventDefault();
-    let arr = [...this.state.registerClass];
+    const arr = ["alert"];
     axios
       .post("http://localhost:9011/api/auth/register", this.state.data)
       .then(res => {
         arr.push("alert-success");
         this.setState({
           registerClass: arr,
-          registerSuccess: 1
+          registerState: true,
+          msg: "Registration Successful!"
         });
       })
       .catch(err => {
         arr.push("alert-danger");
         this.setState({
           registerClass: arr,
-          registerSuccess: 0
+          registerState: true,
+          msg: "Registration Failed!"
         });
       });
   };
@@ -52,16 +54,9 @@ export class RegisterForm extends Component {
     });
   };
 
-  resetState = e => {
-    this.setState({
-      registerClass: this.state.defaultClass,
-      registerSuccess: -1
-    });
-  };
-
   render() {
     return (
-      <div className="container">
+      <div className="form-wrapper">
         <div className="form-container">
           <h3 className="mb-4">Register</h3>
           <form
@@ -115,25 +110,14 @@ export class RegisterForm extends Component {
                 </button>
               </div>
               <div style={{ paddingTop: "20px" }}>
-                {this.state.registerSuccess === 1 ? (
+                {this.state.registerState === true ? (
                   <div className={this.state.registerClass.join(" ")}>
-                    <strong>Success!</strong> Registration Successful.
+                    <strong>{this.state.msg}</strong>
                   </div>
-                ) : (
-                  <div></div>
-                )}
-                {this.state.registerSuccess === 0 ? (
-                  <div className={this.state.registerClass.join(" ")}>
-                    <strong>Failed!</strong> Registration failed.
-                  </div>
-                ) : (
-                  <div></div>
-                )}
+                ) : null}
               </div>
-              <div style={{ paddingTop: "10px" }}>
-                <Link to="/login" onClick={this.resetState}>
-                  Already have an Account? Login Now.
-                </Link>
+              <div>
+                <Link to="/login">Already have an Account? Login Now.</Link>
               </div>
             </div>
           </form>

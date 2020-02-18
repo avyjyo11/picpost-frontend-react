@@ -7,29 +7,6 @@ import RegisterForm from "./pages/RegisterForm";
 
 import "./styles/App.css";
 
-// function withHeaderFooter(Component) {
-//   return function(props) {
-//     return (
-//       <div className="App">
-//         <Header />
-//         <Main {...props} />
-//       </div>
-//     );
-//   };
-// }
-
-// function withAuth(Component) {
-//   return function({ path, isLoggedIn, ...props }) {
-//     return isLoggedIn === true ? (
-//       <Router path={path} render={props => <Component {...props} />} />
-//     ) : (
-//       <Redirect to="/login" />
-//     );
-//   };
-// }
-
-//const ProtectedMain = withAuth(withHeaderFooter(Main));
-
 const PrivateRoute = ({ path, component: Component, isLoggedIn, ...rest }) => {
   return (
     <Route

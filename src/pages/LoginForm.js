@@ -25,7 +25,7 @@ export class LoginForm extends Component {
 
   onSubmit = e => {
     e.preventDefault();
-    let arr = [...this.state.loginClass];
+    const arr = ['alert'];
     axios
       .post("http://localhost:9011/api/auth/login", this.state.data)
       .then(res => {
@@ -49,17 +49,9 @@ export class LoginForm extends Component {
       });
   };
 
-  onReset = e => {
-    this.setState({
-      loginMsg: "",
-      loginClass: ["alert"],
-      loggedIn: false
-    });
-  };
-
   render() {
     return (
-      <div className="container">
+      <div className="form-wrapper">
         <div className="form-container">
           <h3 className="mb-4">Login</h3>
           <form
@@ -82,7 +74,7 @@ export class LoginForm extends Component {
               required
             />
             <div className="form-group">
-              <div className="col-sm-offset-2 col-sm-10">
+              <div className="col-sm-offset-2 col-sm-10 pb-2">
                 <button type="submit" className="btn btn-primary">
                   Login
                 </button>
@@ -94,9 +86,7 @@ export class LoginForm extends Component {
                 >
                   <strong>{this.state.loginMsg}</strong>
                 </div>
-              ) : (
-                <div></div>
-              )}
+              ) : null}
               <div style={{ paddingTop: "10px" }}>
                 <Link to="/register">Don't have an Account? Create Now.</Link>
               </div>

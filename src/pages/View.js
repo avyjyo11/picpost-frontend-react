@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
-import "./View.css";
+import "../styles/View.css";
 
 class View extends Component {
   constructor() {
@@ -20,6 +20,7 @@ class View extends Component {
   }
 
   async componentDidMount() {
+    window.scrollTo(0, 0);
     const { params } = this.props.match;
     const res = await axios.get(
       `http://localhost:9011/api/posts/${params.postid}`
@@ -123,29 +124,27 @@ class View extends Component {
   render() {
     return (
       <React.Fragment>
-        <div className="row mb-3">
-          <div className="col-6">
+        <div className="row pb-3 view-section">
+          <div className="col-7">
             <div className="frame">
               <img src={this.state.image} alt="Club Card" />
             </div>
           </div>
-          <div className="col-6">
-            <div className="row pl-2 pb-3">
-              <strong>{this.state.status}</strong>
-              <span className="ml-2 pt-1 badge badge-secondary">
-                by {this.state.username}
-              </span>
+          <div className="col-5 pl-5">
+            <div className="row pb-3">
+              <h4>
+                {this.state.status}{" "}
+                <span className="ml-2 pt-1 badge badge-secondary">
+                  by {this.state.username}
+                </span>
+              </h4>
             </div>
             <div
-              className="btn-toolbar"
+              className="btn-toolbar pb-2"
               role="toolbar"
               aria-label="Toolbar with button groups"
             >
-              <div
-                className="btn-group mr-2"
-                role="group"
-                aria-label="First group"
-              >
+              <div className="btn-group" role="group" aria-label="First group">
                 <button type="button" className="btn btn-primary">
                   Like
                 </button>
@@ -153,26 +152,23 @@ class View extends Component {
                   Dislike
                 </button>
               </div>
-              <div
-                className="btn-group mr-2"
-                role="group"
-                aria-label="Second group"
-              >
+              <div className="btn-group" role="group" aria-label="Second group">
                 <button type="button" className="btn btn-secondary">
                   Comment
                 </button>
               </div>
             </div>
             <hr />
-            <div className="row">
-              <strong>Comments</strong>
+            <div className="row pb-3">
+              <h5>
+                <strong>Comments</strong>
+              </h5>
             </div>
-            <br />
             {this.state.comments.map((value, index) => {
               return (
                 <React.Fragment key={index}>
                   <div className="row" key={index}>
-                    <div style={{ margin: "0 20px" }}>
+                    <div style={{ margin: "0 14px" }}>
                       <strong>{value.username}</strong>
                     </div>
                     <div>{value.comment}</div>
@@ -204,54 +200,52 @@ class View extends Component {
         </div>
         <hr />
         {this.state.ownPost === true ? (
-          <div className="row edit-delete-post mb-5">
-            <div className="row">
-              <div className="col-10">
-                <form onSubmit={this.handleEdit}>
-                  <div className="row">
-                    <div className="col">
-                      <div className="input-group">
-                        <div className="input-group-prepend">
-                          <div className="input-group-text">Status</div>
-                        </div>
-                        <input
-                          className="form-control"
-                          placeholder="Status"
-                          name="status"
-                          onChange={this.handleEditChange}
-                          type="text"
-                          value={this.state.edit.status || ""}
-                        />
+          <div className="row pt-2 pb-2">
+            <div className="col-10">
+              <form onSubmit={this.handleEdit}>
+                <div className="row">
+                  <div className="col-4">
+                    <div className="input-group">
+                      <div className="input-group-prepend">
+                        <div className="input-group-text">Status</div>
                       </div>
-                    </div>
-                    <div className="col">
-                      <div className="input-group">
-                        <div className="input-group-prepend">
-                          <div className="input-group-text">Image URL</div>
-                        </div>
-                        <input
-                          className="form-control"
-                          placeholder="Image URL"
-                          name="image"
-                          onChange={this.handleEditChange}
-                          type="text"
-                          value={this.state.edit.image || ""}
-                        />
-                      </div>
-                    </div>
-                    <div className="col">
-                      <button className="btn btn-info mr-3" type="submit">
-                        Edit Post
-                      </button>
+                      <input
+                        className="form-control"
+                        placeholder="Status"
+                        name="status"
+                        onChange={this.handleEditChange}
+                        type="text"
+                        value={this.state.edit.status || ""}
+                      />
                     </div>
                   </div>
-                </form>
-              </div>
-              <div className="col-2">
-                <button className="btn btn-danger" onClick={this.handleDelete}>
-                  Delete Post
-                </button>
-              </div>
+                  <div className="col-4">
+                    <div className="input-group">
+                      <div className="input-group-prepend">
+                        <div className="input-group-text">Image URL</div>
+                      </div>
+                      <input
+                        className="form-control"
+                        placeholder="Image URL"
+                        name="image"
+                        onChange={this.handleEditChange}
+                        type="text"
+                        value={this.state.edit.image || ""}
+                      />
+                    </div>
+                  </div>
+                  <div className="col-2">
+                    <button className="btn btn-info" type="submit">
+                      Edit Post
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div className="col-2">
+              <button className="btn btn-danger" onClick={this.handleDelete}>
+                Delete Post
+              </button>
             </div>
           </div>
         ) : null}
