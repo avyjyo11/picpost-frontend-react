@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/picpost-frontend-react/static/css/main.83a3b883.chunk.css",
-    "main.js": "/picpost-frontend-react/static/js/main.402c72b9.chunk.js",
-    "main.js.map": "/picpost-frontend-react/static/js/main.402c72b9.chunk.js.map",
+    "main.js": "/picpost-frontend-react/static/js/main.74045a4e.chunk.js",
+    "main.js.map": "/picpost-frontend-react/static/js/main.74045a4e.chunk.js.map",
     "runtime-main.js": "/picpost-frontend-react/static/js/runtime-main.b2d11886.js",
     "runtime-main.js.map": "/picpost-frontend-react/static/js/runtime-main.b2d11886.js.map",
     "static/js/2.4b535b1e.chunk.js": "/picpost-frontend-react/static/js/2.4b535b1e.chunk.js",
     "static/js/2.4b535b1e.chunk.js.map": "/picpost-frontend-react/static/js/2.4b535b1e.chunk.js.map",
     "index.html": "/picpost-frontend-react/index.html",
-    "precache-manifest.b3c745cff5532c1c50fa0238fe093a5b.js": "/picpost-frontend-react/precache-manifest.b3c745cff5532c1c50fa0238fe093a5b.js",
+    "precache-manifest.c08ea254e25e417fc219a2f6bd90af4a.js": "/picpost-frontend-react/precache-manifest.c08ea254e25e417fc219a2f6bd90af4a.js",
     "service-worker.js": "/picpost-frontend-react/service-worker.js",
     "static/css/main.83a3b883.chunk.css.map": "/picpost-frontend-react/static/css/main.83a3b883.chunk.css.map",
     "static/js/2.4b535b1e.chunk.js.LICENSE": "/picpost-frontend-react/static/js/2.4b535b1e.chunk.js.LICENSE"
@@ -17,6 +17,6 @@
     "static/js/runtime-main.b2d11886.js",
     "static/js/2.4b535b1e.chunk.js",
     "static/css/main.83a3b883.chunk.css",
-    "static/js/main.402c72b9.chunk.js"
+    "static/js/main.74045a4e.chunk.js"
   ]
 }

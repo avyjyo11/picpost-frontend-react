@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/picpost-frontend-react/precache-manifest.b3c745cff5532c1c50fa0238fe093a5b.js"
+  "/picpost-frontend-react/precache-manifest.c08ea254e25e417fc219a2f6bd90af4a.js"
 );
 
 self.addEventListener('message', (event) => {
