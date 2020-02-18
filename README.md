@@ -1,3 +1,5 @@
+## PicPost - simple react app to post and view posted pics and like, comments, etc... ;D
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
