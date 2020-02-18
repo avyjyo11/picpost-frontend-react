@@ -35,7 +35,7 @@ class Header extends Component {
         <div className="container">
           <nav className="navbar navbar-expand-sm navbar-dark">
             <a href="/" className="navbar-brand">
-              Photorapture
+              PicPost
             </a>
             <ul className="navbar-nav ml-auto">
               <li className="navbar-item pr-2">

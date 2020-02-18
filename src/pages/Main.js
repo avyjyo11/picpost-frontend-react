@@ -2,6 +2,7 @@ import React from "react";
 import { Route, Switch, useRouteMatch } from "react-router-dom";
 import Header from "../components/Header";
 import Home from "./Home";
+import Footer from "../components/Footer";
 import Post from "./Post";
 import View from "./View";
 import Setting from "./Setting";
@@ -24,6 +25,7 @@ function Main(props) {
           </Switch>
         </div>
       </main>
+      <Footer />
     </div>
   );
 }
