@@ -1,0 +1,8 @@
+.form-container {
+  padding: 30px;
+  border: 1px solid #b8b8b8;
+  width: 500px;
+  margin: 50vh auto;
+  transform: translate(0%, -50%);
+  background-color: #fff;
+}
