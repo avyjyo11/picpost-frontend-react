@@ -1,23 +1,23 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "16f7335df05b8f6ad9bdbda66e023ebf",
+    "revision": "40654b55e7276c424fadd04417a85ff6",
     "url": "/picpost-frontend-react/index.html"
   },
   {
-    "revision": "af14e0f4211afa52dc39",
+    "revision": "0057892cd6a82637a171",
     "url": "/picpost-frontend-react/static/css/main.83a3b883.chunk.css"
   },
   {
-    "revision": "945cb00935e26d20c47b",
-    "url": "/picpost-frontend-react/static/js/2.d2caee47.chunk.js"
+    "revision": "3e4388273ab009550c44",
+    "url": "/picpost-frontend-react/static/js/2.c8845918.chunk.js"
   },
   {
     "revision": "e928fe768baa9832b5bc57eae021f30c",
-    "url": "/picpost-frontend-react/static/js/2.d2caee47.chunk.js.LICENSE"
+    "url": "/picpost-frontend-react/static/js/2.c8845918.chunk.js.LICENSE"
   },
   {
-    "revision": "af14e0f4211afa52dc39",
-    "url": "/picpost-frontend-react/static/js/main.ad68363a.chunk.js"
+    "revision": "0057892cd6a82637a171",
+    "url": "/picpost-frontend-react/static/js/main.83ee2455.chunk.js"
   },
   {
     "revision": "f3940b2ee8d3396398f2",
