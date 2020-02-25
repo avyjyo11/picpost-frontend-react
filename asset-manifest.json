@@ -1,22 +1,22 @@
 {
   "files": {
     "main.css": "/picpost-frontend-react/static/css/main.83a3b883.chunk.css",
-    "main.js": "/picpost-frontend-react/static/js/main.83ee2455.chunk.js",
-    "main.js.map": "/picpost-frontend-react/static/js/main.83ee2455.chunk.js.map",
+    "main.js": "/picpost-frontend-react/static/js/main.938780ab.chunk.js",
+    "main.js.map": "/picpost-frontend-react/static/js/main.938780ab.chunk.js.map",
     "runtime-main.js": "/picpost-frontend-react/static/js/runtime-main.b2d11886.js",
     "runtime-main.js.map": "/picpost-frontend-react/static/js/runtime-main.b2d11886.js.map",
-    "static/js/2.c8845918.chunk.js": "/picpost-frontend-react/static/js/2.c8845918.chunk.js",
-    "static/js/2.c8845918.chunk.js.map": "/picpost-frontend-react/static/js/2.c8845918.chunk.js.map",
+    "static/js/2.c2a84e46.chunk.js": "/picpost-frontend-react/static/js/2.c2a84e46.chunk.js",
+    "static/js/2.c2a84e46.chunk.js.map": "/picpost-frontend-react/static/js/2.c2a84e46.chunk.js.map",
     "index.html": "/picpost-frontend-react/index.html",
-    "precache-manifest.b5f6f4d938db6ccd752216f9918a26f7.js": "/picpost-frontend-react/precache-manifest.b5f6f4d938db6ccd752216f9918a26f7.js",
+    "precache-manifest.3c2b72526864d3880b0ef15a77db0fe0.js": "/picpost-frontend-react/precache-manifest.3c2b72526864d3880b0ef15a77db0fe0.js",
     "service-worker.js": "/picpost-frontend-react/service-worker.js",
     "static/css/main.83a3b883.chunk.css.map": "/picpost-frontend-react/static/css/main.83a3b883.chunk.css.map",
-    "static/js/2.c8845918.chunk.js.LICENSE": "/picpost-frontend-react/static/js/2.c8845918.chunk.js.LICENSE"
+    "static/js/2.c2a84e46.chunk.js.LICENSE": "/picpost-frontend-react/static/js/2.c2a84e46.chunk.js.LICENSE"
   },
   "entrypoints": [
     "static/js/runtime-main.b2d11886.js",
-    "static/js/2.c8845918.chunk.js",
+    "static/js/2.c2a84e46.chunk.js",
     "static/css/main.83a3b883.chunk.css",
-    "static/js/main.83ee2455.chunk.js"
+    "static/js/main.938780ab.chunk.js"
   ]
 }
