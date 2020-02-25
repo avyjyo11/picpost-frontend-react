@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import Input from "../components/Input";
+import api from "../constants/api.config";
 
 export class LoginForm extends Component {
   constructor() {
@@ -28,7 +29,7 @@ export class LoginForm extends Component {
     console.log("submit");
     const arr = ["alert"];
     axios
-      .post("http://localhost:9011/api/auth/login", this.state.data)
+      .post(`${api.API_URL}/auth/login`, this.state.data)
       .then(res => {
         arr.push("alert-success");
         window.localStorage.setItem("token", res.data.token);

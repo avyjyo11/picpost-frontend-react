@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Input from "../components/Input";
 import axios from "axios";
+import api from "../constants/api.config";
 
 class Post extends Component {
   constructor() {
@@ -39,7 +40,7 @@ class Post extends Component {
     };
     console.log(data);
     axios
-      .post(`http://localhost:9011/api/posts`, data, {
+      .post(`${api.API_URL}/posts`, data, {
         headers: {
           Authorization: `${window.localStorage.getItem("token")}`
         }

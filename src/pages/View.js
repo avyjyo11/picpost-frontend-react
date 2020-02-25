@@ -1,16 +1,20 @@
 import React, { Component } from "react";
 import axios from "axios";
+import api from "../constants/api.config";
 import "../styles/View.css";
 
 class View extends Component {
   constructor() {
     super();
     this.state = {
+      likeStatus: false,
+      userdata: {},
       image: "",
       status: "",
       comments: [],
       username: "",
       myComment: "",
+      likeCount: 0,
       ownPost: false,
       edit: {
         status: "",
@@ -22,19 +26,27 @@ class View extends Component {
   async componentDidMount() {
     window.scrollTo(0, 0);
     const { params } = this.props.match;
-    const res = await axios.get(
-      `http://localhost:9011/api/posts/${params.postid}`
-    );
+    const res = await axios.get(`${api.API_URL}/posts/${params.postid}`);
+    const postuser = await axios.get(`${api.API_URL}/users/${res.data.user}`, {
+      headers: {
+        Authorization: `${window.localStorage.getItem("token")}`
+      }
+    });
     const user = await axios.get(
-      `http://localhost:9011/api/users/${res.data.user}`,
+      `${api.API_URL}/users/${localStorage.getItem("userid")}`,
       {
         headers: {
-          Authorization: `${window.localStorage.getItem("token")}`
+          Authorization: localStorage.getItem("token")
         }
       }
     );
+    user.data.user.likedPosts.forEach(val => {
+      if (val === params.postid) {
+        this.setState({ ...this.state, likeStatus: true });
+      }
+    });
     const comments = await axios.get(
-      `http://localhost:9011/api/comments/${params.postid}`,
+      `${api.API_URL}/comments/${params.postid}`,
       {
         headers: {
           Authorization: `${window.localStorage.getItem("token")}`
@@ -42,10 +54,12 @@ class View extends Component {
       }
     );
     this.setState({
+      userdata: { ...user.data.user },
       image: res.data.image,
       status: res.data.status,
-      username: user.data.user.username,
+      username: postuser.data.user.username,
       comments: [...comments.data],
+      likeCount: res.data.likeCount,
       ownPost: res.data.user === localStorage.getItem("userid") ? true : false,
       edit: {
         image: res.data.image,
@@ -63,7 +77,7 @@ class View extends Component {
   handleDelete = e => {
     const { params } = this.props.match;
     axios
-      .delete(`http://localhost:9011/api/posts/${params.postid}`, {
+      .delete(`${api.API_URL}/posts/${params.postid}`, {
         headers: {
           Authorization: localStorage.getItem("token")
         }
@@ -78,9 +92,8 @@ class View extends Component {
     e.preventDefault();
     const { params } = this.props.match;
     const data = { ...this.state.edit };
-    console.log("data", data);
     axios
-      .put(`http://localhost:9011/api/posts/${params.postid}`, data, {
+      .put(`${api.API_URL}/posts/${params.postid}`, data, {
         headers: {
           Authorization: localStorage.getItem("token")
         }
@@ -98,7 +111,6 @@ class View extends Component {
         [e.target.name]: e.target.value
       }
     });
-    console.log(this.state.edit);
   };
 
   handleComment = event => {
@@ -110,7 +122,7 @@ class View extends Component {
     };
 
     axios
-      .post(`http://localhost:9011/api/comments/${params.postid}`, data, {
+      .post(`${api.API_URL}/comments/${params.postid}`, data, {
         headers: {
           Authorization: localStorage.getItem("token")
         }
@@ -121,6 +133,77 @@ class View extends Component {
         });
       })
       .catch(err => console.log(err.response));
+  };
+
+  handleLike = event => {
+    event.preventDefault();
+    const { params } = this.props.match;
+    if (!this.state.likeStatus) {
+      let data = {
+        ...this.state.userdata, //try removing this line in future for a try
+        likedPosts: [...this.state.userdata.likedPosts, params.postid]
+      };
+      axios
+        .put(`${api.API_URL}/users/${localStorage.getItem("userid")}`, data, {
+          headers: {
+            Authorization: localStorage.getItem("token")
+          }
+        })
+        .then(res => {
+          this.setState({ ...this.state, likeStatus: true });
+        })
+        .catch(err => console.error(err));
+
+      axios
+        .put(
+          `${api.API_URL}/posts/${params.postid}`,
+          { likeCount: this.state.likeCount + 1 },
+          {
+            headers: {
+              Authorization: localStorage.getItem("token")
+            }
+          }
+        )
+        .then(res => {
+          this.setState({ likeCount: this.state.likeCount + 1 });
+        })
+        .catch(err => console.log(err));
+    } else {
+      let arr = this.state.userdata.likedPosts.filter(val => {
+        return val !== params.postid;
+      });
+      console.log(arr);
+      let data = {
+        ...this.state.userdata, //try removing this line in future for a try
+        likedPosts: [...arr]
+      };
+      axios
+        .put(`${api.API_URL}/users/${localStorage.getItem("userid")}`, data, {
+          headers: {
+            Authorization: localStorage.getItem("token")
+          }
+        })
+        .then(res => {
+          console.log(res.data.result);
+          this.setState({ ...this.state, likeStatus: false });
+        })
+        .catch(err => console.error(err));
+
+      axios
+        .put(
+          `${api.API_URL}/posts/${params.postid}`,
+          { likeCount: this.state.likeCount - 1 },
+          {
+            headers: {
+              Authorization: localStorage.getItem("token")
+            }
+          }
+        )
+        .then(res => {
+          this.setState({ likeCount: this.state.likeCount - 1 });
+        })
+        .catch(err => console.log(err));
+    }
   };
 
   render() {
@@ -141,25 +224,18 @@ class View extends Component {
                 </span>
               </h4>
             </div>
-            <div
-              className="btn-toolbar pb-2"
-              role="toolbar"
-              aria-label="Toolbar with button groups"
+
+            <button
+              onClick={this.handleLike}
+              type="button"
+              className="btn px-3 btn-primary"
             >
-              <div className="btn-group" role="group" aria-label="First group">
-                <button type="button" className="btn btn-primary">
-                  Like
-                </button>
-                <button type="button" className="btn btn-primary">
-                  Dislike
-                </button>
-              </div>
-              <div className="btn-group" role="group" aria-label="Second group">
-                <button type="button" className="btn btn-secondary">
-                  Comment
-                </button>
-              </div>
-            </div>
+              {this.state.likeStatus ? "Liked 🖤" : "Like"}
+            </button>
+            <p className="like-number-div ml-3 mt-3">
+              {this.state.likeCount} people liked this post.
+            </p>
+
             <hr />
             <div className="row pb-3">
               <h5>

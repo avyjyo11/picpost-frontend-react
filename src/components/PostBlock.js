@@ -26,9 +26,6 @@ function PostBlock(props) {
             <button type="button" className="btn btn-primary">
               Like
             </button>
-            <button type="button" className="btn btn-primary">
-              Dislike
-            </button>
           </div>
           <div
             className="btn-group mr-2"

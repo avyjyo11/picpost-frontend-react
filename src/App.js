@@ -49,8 +49,8 @@ class App extends React.Component {
   settingState = () => {
     this.setState({
       isLoggedIn: localStorage.getItem("token") ? true : false
-    })
-  }
+    });
+  };
 
   render() {
     return (
@@ -65,7 +65,6 @@ class App extends React.Component {
           exact
           path="/"
           render={() => {
-            console.log(this.state.isLoggedIn);
             return this.state.isLoggedIn ? (
               <Redirect to="/home" />
             ) : (
@@ -73,7 +72,12 @@ class App extends React.Component {
             );
           }}
         />
-        <Route path="/login" render={props => <LoginForm {...props} settingState={this.settingState}/>} />
+        <Route
+          path="/login"
+          render={props => (
+            <LoginForm {...props} settingState={this.settingState} />
+          )}
+        />
         <Route path="/register" component={RegisterForm} />
       </div>
     );

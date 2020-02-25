@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import api from "../constants/api.config";
 
 class Header extends Component {
   constructor() {
@@ -13,7 +14,7 @@ class Header extends Component {
   componentDidMount() {
     axios
       .get(
-        `http://localhost:9011/api/users/${localStorage.getItem("userid")}`,
+        `${api.API_URL}/users/${localStorage.getItem("userid")}`,
         {
           headers: {
             Authorization: `${window.localStorage.getItem("token")}`
@@ -35,7 +36,7 @@ class Header extends Component {
         <div className="container">
           <nav className="navbar navbar-expand-sm navbar-dark">
             <a href="/" className="navbar-brand">
-              PicPost
+            Photorapture
             </a>
             <ul className="navbar-nav ml-auto">
               <li className="navbar-item pr-2">

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import PostBlock from "../components/PostBlock";
 import Columned from "react-columned";
 import axios from "axios";
+import api from "../constants/api.config";
 
 class Home extends Component {
   constructor() {
@@ -20,7 +21,7 @@ class Home extends Component {
 
   componentDidMount() {
     axios
-      .get(`http://localhost:9011/api/posts`)
+      .get(`${api.API_URL}/posts`)
       .then(res => {
         this.setState({
           posts: [...res.data]

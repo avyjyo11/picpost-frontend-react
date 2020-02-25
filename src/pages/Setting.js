@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Input from "../components/Input";
 import axios from "axios";
+import api from "../constants/api.config";
 
 class Setting extends Component {
   constructor() {
@@ -22,14 +23,11 @@ class Setting extends Component {
 
   componentDidMount() {
     axios
-      .get(
-        `http://localhost:9011/api/users/${localStorage.getItem("userid")}`,
-        {
-          headers: {
-            Authorization: localStorage.getItem("token")
-          }
+      .get(`${api.API_URL}/users/${localStorage.getItem("userid")}`, {
+        headers: {
+          Authorization: localStorage.getItem("token")
         }
-      )
+      })
       .then(res => {
         const user = res.data.user;
         this.setState({
@@ -41,7 +39,6 @@ class Setting extends Component {
             email: user.email
           }
         });
-        console.log(this.state.data);
       })
       .catch(err => console.log(err.response));
   }
@@ -62,15 +59,11 @@ class Setting extends Component {
     };
     let arr = [...this.state.updateClass];
     axios
-      .put(
-        `http://localhost:9011/api/users/${localStorage.getItem("userid")}`,
-        data,
-        {
-          headers: {
-            Authorization: localStorage.getItem("token")
-          }
+      .put(`${api.API_URL}/users/${localStorage.getItem("userid")}`, data, {
+        headers: {
+          Authorization: localStorage.getItem("token")
         }
-      )
+      })
       .then(res => {
         arr.push("alert-success");
         const result = res.data.result;

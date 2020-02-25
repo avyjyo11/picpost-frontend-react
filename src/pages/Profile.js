@@ -3,6 +3,7 @@ import PostBlock from "../components/PostBlock";
 import Columned from "react-columned";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import api from "../constants/api.config";
 
 class Profile extends Component {
   constructor() {
@@ -13,22 +14,21 @@ class Profile extends Component {
         username: "",
         bio: "",
         address: "",
-        email: ""
+        email: "",
+        likedPosts: []
       },
-      myPosts: []
+      myPosts: [],
+      contentPosts: []
     };
   }
 
   componentDidMount() {
     axios
-      .get(
-        `http://localhost:9011/api/users/${localStorage.getItem("userid")}`,
-        {
-          headers: {
-            Authorization: `${window.localStorage.getItem("token")}`
-          }
+      .get(`${api.API_URL}/users/pop/${localStorage.getItem("userid")}`, {
+        headers: {
+          Authorization: `${window.localStorage.getItem("token")}`
         }
-      )
+      })
       .then(res => {
         const user = res.data.user;
         this.setState({
@@ -37,19 +37,19 @@ class Profile extends Component {
             username: user.username,
             bio: user.bio,
             address: user.address,
-            email: user.email
+            email: user.email,
+            likedPosts: user.likedPosts
           }
         });
       })
       .catch(err => console.log(err.response.data));
 
     axios
-      .get(
-        `http://localhost:9011/api/posts/user/${localStorage.getItem("userid")}`
-      )
+      .get(`${api.API_URL}/posts/user/${localStorage.getItem("userid")}`)
       .then(res => {
         this.setState({
-          myPosts: [...res.data]
+          myPosts: [...res.data],
+          contentPosts: [...res.data]
         });
       })
       .catch(err => console.log(err.response.data));
@@ -58,6 +58,22 @@ class Profile extends Component {
   handleLogout = event => {
     localStorage.clear();
     window.location.pathname = "/";
+  };
+
+  showLiked = event => {
+    let buttons = event.target.parentNode.children;
+    buttons[0].classList.remove("active");
+    buttons[1].classList.remove("active");
+    event.target.classList.add("active");
+    this.setState({ contentPosts: [...this.state.userdata.likedPosts] });
+  };
+
+  showMyPosts = event => {
+    let buttons = event.target.parentNode.children;
+    buttons[0].classList.remove("active");
+    buttons[1].classList.remove("active");
+    event.target.classList.add("active");
+    this.setState({ contentPosts: [...this.state.myPosts] });
   };
 
   render() {
@@ -105,19 +121,19 @@ class Profile extends Component {
           </div>
         </div>
         <div className="pb-3">
-          <ul className="nav nav-tabs">
-            <li className="nav-item">
-              <button className="nav-link active">My Posts</button>
+          <ul className="nav nav-tabs" style={{ cursor: "pointer" }}>
+            <li onClick={this.showMyPosts} className="nav-item nav-link active">
+              My Posts
             </li>
-            <li className="nav-item">
-              <button className="nav-link">Liked Posts</button>
+            <li onClick={this.showLiked} className="nav-item nav-link">
+              Liked Posts
             </li>
           </ul>
         </div>
         <Columned
           columns={{ "320": 1, "480": 2, "800": 2, "1366": 3, "1920": 4 }}
         >
-          {this.state.myPosts.map((value, index) => {
+          {this.state.contentPosts.map((value, index) => {
             return (
               <Link to={`${value._id}`} key={index}>
                 <PostBlock imgURL={value.image} status={value.status} />

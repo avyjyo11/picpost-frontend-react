@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import Input from "../components/Input";
 import axios from "axios";
+import api from "../constants/api.config";
 import "../styles/Login.css";
 
 export class RegisterForm extends Component {
@@ -26,7 +27,7 @@ export class RegisterForm extends Component {
     e.preventDefault();
     const arr = ["alert"];
     axios
-      .post("http://localhost:9011/api/auth/register", this.state.data)
+      .post(`${api.API_URL}/auth/register`, this.state.data)
       .then(res => {
         arr.push("alert-success");
         this.setState({
