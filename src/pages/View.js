@@ -18,29 +18,30 @@ class View extends Component {
       ownPost: false,
       edit: {
         status: "",
-        image: ""
-      }
+        image: "",
+      },
     };
   }
 
   async componentDidMount() {
     window.scrollTo(0, 0);
+
     const { params } = this.props.match;
     const res = await axios.get(`${api.API_URL}/posts/${params.postid}`);
     const postuser = await axios.get(`${api.API_URL}/users/${res.data.user}`, {
       headers: {
-        Authorization: `${window.localStorage.getItem("token")}`
-      }
+        Authorization: `${window.localStorage.getItem("token")}`,
+      },
     });
     const user = await axios.get(
       `${api.API_URL}/users/${localStorage.getItem("userid")}`,
       {
         headers: {
-          Authorization: localStorage.getItem("token")
-        }
+          Authorization: localStorage.getItem("token"),
+        },
       }
     );
-    user.data.user.likedPosts.forEach(val => {
+    user.data.user.likedPosts.forEach((val) => {
       if (val === params.postid) {
         this.setState({ ...this.state, likeStatus: true });
       }
@@ -49,8 +50,8 @@ class View extends Component {
       `${api.API_URL}/comments/${params.postid}`,
       {
         headers: {
-          Authorization: `${window.localStorage.getItem("token")}`
-        }
+          Authorization: `${window.localStorage.getItem("token")}`,
+        },
       }
     );
     this.setState({
@@ -63,96 +64,96 @@ class View extends Component {
       ownPost: res.data.user === localStorage.getItem("userid") ? true : false,
       edit: {
         image: res.data.image,
-        status: res.data.status
-      }
+        status: res.data.status,
+      },
     });
   }
 
-  handleChange = e => {
+  handleChange = (e) => {
     this.setState({
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
-  handleDelete = e => {
+  handleDelete = (e) => {
     const { params } = this.props.match;
     axios
       .delete(`${api.API_URL}/posts/${params.postid}`, {
         headers: {
-          Authorization: localStorage.getItem("token")
-        }
+          Authorization: localStorage.getItem("token"),
+        },
       })
-      .then(res => {
+      .then((res) => {
         this.props.history.push("/home/profile");
       })
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
   };
 
-  handleEdit = e => {
+  handleEdit = (e) => {
     e.preventDefault();
     const { params } = this.props.match;
     const data = { ...this.state.edit };
     axios
       .put(`${api.API_URL}/posts/${params.postid}`, data, {
         headers: {
-          Authorization: localStorage.getItem("token")
-        }
+          Authorization: localStorage.getItem("token"),
+        },
       })
-      .then(res => {
+      .then((res) => {
         this.props.history.push("/home/profile");
       })
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
   };
 
-  handleEditChange = e => {
+  handleEditChange = (e) => {
     this.setState({
       edit: {
         ...this.state.edit,
-        [e.target.name]: e.target.value
-      }
+        [e.target.name]: e.target.value,
+      },
     });
   };
 
-  handleComment = event => {
+  handleComment = (event) => {
     event.preventDefault();
     const { params } = this.props.match;
     let data = {
       userid: localStorage.getItem("userid"),
-      comment: this.state.myComment
+      comment: this.state.myComment,
     };
 
     axios
       .post(`${api.API_URL}/comments/${params.postid}`, data, {
         headers: {
-          Authorization: localStorage.getItem("token")
-        }
+          Authorization: localStorage.getItem("token"),
+        },
       })
-      .then(res => {
+      .then((res) => {
         this.setState({
-          comments: [...this.state.comments, res.data]
+          comments: [...this.state.comments, res.data],
         });
       })
-      .catch(err => console.log(err.response));
+      .catch((err) => console.log(err.response));
   };
 
-  handleLike = event => {
+  handleLike = (event) => {
     event.preventDefault();
     const { params } = this.props.match;
     if (!this.state.likeStatus) {
       let data = {
         ...this.state.userdata, //try removing this line in future for a try
-        likedPosts: [...this.state.userdata.likedPosts, params.postid]
+        likedPosts: [...this.state.userdata.likedPosts, params.postid],
       };
       axios
         .put(`${api.API_URL}/users/${localStorage.getItem("userid")}`, data, {
           headers: {
-            Authorization: localStorage.getItem("token")
-          }
+            Authorization: localStorage.getItem("token"),
+          },
         })
-        .then(res => {
+        .then((res) => {
           this.setState({ ...this.state, likeStatus: true });
         })
-        .catch(err => console.error(err));
+        .catch((err) => console.error(err));
 
       axios
         .put(
@@ -160,34 +161,34 @@ class View extends Component {
           { likeCount: this.state.likeCount + 1 },
           {
             headers: {
-              Authorization: localStorage.getItem("token")
-            }
+              Authorization: localStorage.getItem("token"),
+            },
           }
         )
-        .then(res => {
+        .then((res) => {
           this.setState({ likeCount: this.state.likeCount + 1 });
         })
-        .catch(err => console.log(err));
+        .catch((err) => console.log(err));
     } else {
-      let arr = this.state.userdata.likedPosts.filter(val => {
+      let arr = this.state.userdata.likedPosts.filter((val) => {
         return val !== params.postid;
       });
       console.log(arr);
       let data = {
         ...this.state.userdata, //try removing this line in future for a try
-        likedPosts: [...arr]
+        likedPosts: [...arr],
       };
       axios
         .put(`${api.API_URL}/users/${localStorage.getItem("userid")}`, data, {
           headers: {
-            Authorization: localStorage.getItem("token")
-          }
+            Authorization: localStorage.getItem("token"),
+          },
         })
-        .then(res => {
+        .then((res) => {
           console.log(res.data.result);
           this.setState({ ...this.state, likeStatus: false });
         })
-        .catch(err => console.error(err));
+        .catch((err) => console.error(err));
 
       axios
         .put(
@@ -195,14 +196,14 @@ class View extends Component {
           { likeCount: this.state.likeCount - 1 },
           {
             headers: {
-              Authorization: localStorage.getItem("token")
-            }
+              Authorization: localStorage.getItem("token"),
+            },
           }
         )
-        .then(res => {
+        .then((res) => {
           this.setState({ likeCount: this.state.likeCount - 1 });
         })
-        .catch(err => console.log(err));
+        .catch((err) => console.log(err));
     }
   };
 

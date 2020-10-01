@@ -1,9 +1,11 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import Input from "../components/Input";
-import axios from "axios";
-import api from "../constants/api.config";
+
 import "../styles/Login.css";
+
+import Input from "../components/Input";
+
+import { register } from "../services/auth";
 
 export class RegisterForm extends Component {
   constructor() {
@@ -14,44 +16,43 @@ export class RegisterForm extends Component {
         bio: "",
         address: "",
         email: "",
-        password: ""
+        password: "",
       },
       disabled: false,
       registerClass: [],
       registerState: false,
-      msg: ""
+      msg: "",
     };
   }
 
-  onSubmit = e => {
+  onSubmit = async (e) => {
     e.preventDefault();
     const arr = ["alert"];
-    axios
-      .post(`${api.API_URL}/auth/register`, this.state.data)
-      .then(res => {
-        arr.push("alert-success");
-        this.setState({
-          registerClass: arr,
-          registerState: true,
-          msg: "Registration Successful!"
-        });
-      })
-      .catch(err => {
-        arr.push("alert-danger");
-        this.setState({
-          registerClass: arr,
-          registerState: true,
-          msg: "Registration Failed!"
-        });
+
+    try {
+      await register(this.state.data);
+      arr.push("alert-success");
+      this.setState({
+        registerClass: arr,
+        registerState: true,
+        msg: "Registration Successful!",
       });
+    } catch (err) {
+      arr.push("alert-danger");
+      this.setState({
+        registerClass: arr,
+        registerState: true,
+        msg: "Registration Failed!",
+      });
+    }
   };
 
-  onChange = e => {
+  onChange = (e) => {
     this.setState({
       data: {
         ...this.state.data,
-        [e.target.name]: e.target.value
-      }
+        [e.target.name]: e.target.value,
+      },
     });
   };
 

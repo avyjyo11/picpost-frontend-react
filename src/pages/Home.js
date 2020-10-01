@@ -1,39 +1,34 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import PostBlock from "../components/PostBlock";
 import Columned from "react-columned";
-import axios from "axios";
-import api from "../constants/api.config";
+
+import PostBlock from "../components/PostBlock";
+
+import { getPosts } from "../services/posts";
+
+const DEFAULT_POST = {
+  image:
+    "https://images.pexels.com/photos/556663/pexels-photo-556663.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  status: "Hello World",
+};
 
 class Home extends Component {
   constructor() {
     super();
     this.state = {
-      posts: [
-        {
-          image:
-            "https://images.pexels.com/photos/556663/pexels-photo-556663.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-          status: "Hello World"
-        }
-      ]
+      posts: [DEFAULT_POST],
     };
   }
 
-  componentDidMount() {
-    axios
-      .get(`${api.API_URL}/posts`)
-      .then(res => {
-        this.setState({
-          posts: [...res.data]
-        });
-      })
-      .catch(err => console.log(err.response.data));
+  async componentDidMount() {
+    const data = await getPosts();
+    this.setState({ posts: data });
   }
 
   render() {
     const { url } = this.props.match;
     const tabsStyle = {
-      paddingBottom: "20px"
+      paddingBottom: "20px",
     };
     return (
       <React.Fragment>
@@ -47,9 +42,7 @@ class Home extends Component {
             </li>
           </ul>
         </div>
-        <Columned
-          columns={{ "320": 1, "480": 2, "800": 2, "1366": 3, "1920": 4 }}
-        >
+        <Columned columns={{ 320: 1, 480: 2, 800: 2, 1366: 3, 1920: 4 }}>
           {this.state.posts.map((value, index) => {
             return (
               <Link key={index} to={`${url}/${value._id}`}>

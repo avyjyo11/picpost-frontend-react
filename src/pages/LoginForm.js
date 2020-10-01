@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import axios from "axios";
 import { Link } from "react-router-dom";
 import Input from "../components/Input";
-import api from "../constants/api.config";
+
+import { login } from "../services/auth";
 
 export class LoginForm extends Component {
   constructor() {
@@ -10,49 +10,44 @@ export class LoginForm extends Component {
     this.state = {
       data: {
         username: "",
-        password: ""
+        password: "",
       },
       loggedIn: false,
       loginClass: ["alert"],
-      loginMsg: ""
+      loginMsg: "",
     };
   }
 
-  onChange = e => {
+  onChange = (e) => {
     this.setState({
-      data: { ...this.state.data, [e.target.name]: e.target.value }
+      data: { ...this.state.data, [e.target.name]: e.target.value },
     });
   };
 
-  onSubmit = e => {
+  onSubmit = async (e) => {
     e.preventDefault();
-    console.log("submit");
+
     const arr = ["alert"];
-    axios
-      .post(`${api.API_URL}/auth/login`, this.state.data)
-      .then(res => {
-        arr.push("alert-success");
-        window.localStorage.setItem("token", res.data.token);
-        window.localStorage.setItem("userid", res.data.userid);
-        //window.location.pathname = "/";
-        this.setState({
-          loggedIn: true,
-          loginClass: arr,
-          loginMsg: "Login Successful!"
-        });
-        this.props.settingState();
-        setTimeout(() => {
-          this.props.history.push("/");
-        }, 500);
-      })
-      .catch(err => {
-        arr.push("alert-danger");
-        this.setState({
-          loggedIn: true,
-          loginClass: arr,
-          loginMsg: "Login Falied!"
-        });
+    try {
+      await login(this.state.data);
+      arr.push("alert-success");
+      this.setState({
+        loggedIn: true,
+        loginClass: arr,
+        loginMsg: "Login Successful!",
       });
+      this.props.settingState();
+      setTimeout(() => {
+        this.props.history.push("/");
+      }, 500);
+    } catch (err) {
+      arr.push("alert-danger");
+      this.setState({
+        loggedIn: true,
+        loginClass: arr,
+        loginMsg: "Login Falied!",
+      });
+    }
   };
 
   render() {
