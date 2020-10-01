@@ -7,36 +7,33 @@ class Header extends Component {
   constructor() {
     super();
     this.state = {
-      username: "Username"
+      username: "Username",
     };
   }
 
   componentDidMount() {
     axios
-      .get(
-        `${api.API_URL}/users/${localStorage.getItem("userid")}`,
-        {
-          headers: {
-            Authorization: `${window.localStorage.getItem("token")}`
-          }
-        }
-      )
-      .then(res => {
+      .get(`${api.API_URL}/users/${localStorage.getItem("userid")}`, {
+        headers: {
+          Authorization: `${window.localStorage.getItem("token")}`,
+        },
+      })
+      .then((res) => {
         this.setState({
-          username: res.data.user.username
+          username: res.data.user.username,
         });
       })
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
   }
 
   render() {
     const url = this.props.url;
     return (
-      <header className="bg-dark mb-4">
+      <header className="bg-dark mb-4 sticky-top">
         <div className="container">
           <nav className="navbar navbar-expand-sm navbar-dark">
             <a href="/" className="navbar-brand">
-            Photorapture
+              Photorapture
             </a>
             <ul className="navbar-nav ml-auto">
               <li className="navbar-item pr-2">

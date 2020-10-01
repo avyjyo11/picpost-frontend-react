@@ -7,55 +7,54 @@ class Post extends Component {
   constructor() {
     super();
     this.state = {
-      data: {}
+      data: {},
     };
   }
 
-  handleChange = e => {
+  handleChange = (e) => {
     e.preventDefault();
     if (e.target.type === "file") {
       this.setState({
         data: {
           ...this.state.data,
-          file: URL.createObjectURL(e.target.files[0])
-        }
+          file: URL.createObjectURL(e.target.files[0]),
+        },
       });
     } else {
       this.setState({
         data: {
           ...this.state.data,
-          [e.target.name]: e.target.value
-        }
+          [e.target.name]: e.target.value,
+        },
       });
-      console.log(this.state.data);
     }
   };
 
-  handleSubmit = event => {
+  handleSubmit = (event) => {
     event.preventDefault();
     const data = {
       status: this.state.data.status,
       image: this.state.data.image || this.state.data.file,
-      user: localStorage.getItem("userid")
+      user: localStorage.getItem("userid"),
     };
     console.log(data);
     axios
       .post(`${api.API_URL}/posts`, data, {
         headers: {
-          Authorization: `${window.localStorage.getItem("token")}`
-        }
+          Authorization: `${window.localStorage.getItem("token")}`,
+        },
       })
-      .then(res => {
+      .then((res) => {
         window.location.pathname = "/";
       })
-      .catch(err => console.log(err.response.data));
+      .catch((err) => console.log(err.response.data));
   };
 
   render() {
     const formStyle = {
       width: "70%",
       padding: "30px 0",
-      margin: "0 auto"
+      margin: "0 auto",
     };
 
     return (
